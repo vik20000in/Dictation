@@ -37,6 +37,14 @@
             padding: 10px;
             border-radius: 5px;
         }
+        #textDisplay {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            min-height: 50px;
+            font-size: 18px;
+            white-space: pre-wrap; /* Preserves spaces and wraps text */
+        }
     </style>
 </head>
 <body>
@@ -53,9 +61,9 @@
         <button id="stopButton" disabled>Stop</button>
         <button id="speedUpButton">Speed Up 10%</button>
         <button id="speedDownButton">Speed Down 10%</button>
-        <span id="speedDisplay">100%</span>
+        <span id="speedDisplay">60%</span>
     </div>
-
+    <div id="textDisplay"></div>
     <div class="instructions">
         <h2>Instructions</h2>
         <ol>
@@ -72,7 +80,7 @@
         let dictationData = null;
         let utterances = [];
         let currentIndex = 0;
-        let speedFactor = 1;
+        let speedFactor = 0.6; // Default starting speed set to 60%
         let isPaused = false;
 
         // Load JSON data automatically from dictation.json
@@ -143,6 +151,18 @@
             phrases.forEach(phrase => {
                 for (let i = 0; i < 3; i++) {
                     const utterance = new SpeechSynthesisUtterance(phrase);
+                    utterance.words = phrase.split(' '); // Split phrase into words
+                    utterance.onstart = function() {
+                        this.currentWordIndex = 0;
+                        document.getElementById('textDisplay').innerHTML = ''; // Clear display
+                    };
+                    utterance.onboundary = function(event) {
+                        if (event.name === 'word' && this.currentWordIndex < this.words.length) {
+                            const word = this.words[this.currentWordIndex];
+                            document.getElementById('textDisplay').innerHTML += word + ' '; // Append word
+                            this.currentWordIndex++;
+                        }
+                    };
                     utterances.push(utterance);
                 }
             });
@@ -161,59 +181,4 @@
         // Speak the next phrase in the queue
         function speakNext() {
             if (currentIndex < utterances.length) {
-                const utterance = utterances[currentIndex];
-                utterance.rate = speedFactor; // Apply current speed
-                speechSynthesis.speak(utterance);
-                currentIndex++;
-                utterance.onend = speakNext; // Move to the next phrase when this one ends
-            } else {
-                alert('Dictation completed!');
-                document.getElementById('playPauseButton').disabled = true;
-                document.getElementById('stopButton').disabled = true;
-            }
-        }
-
-        // Toggle between pause and play
-        document.getElementById('playPauseButton').addEventListener('click', function() {
-            if (isPaused) {
-                speechSynthesis.resume();
-                this.textContent = 'Pause';
-            } else {
-                speechSynthesis.pause();
-                this.textContent = 'Play';
-            }
-            isPaused = !isPaused;
-        });
-
-        // Stop the dictation and reset
-        document.getElementById('stopButton').addEventListener('click', function() {
-            speechSynthesis.cancel();
-            currentIndex = 0;
-            isPaused = false;
-            document.getElementById('playPauseButton').textContent = 'Pause';
-            document.getElementById('playPauseButton').disabled = true;
-            document.getElementById('stopButton').disabled = true;
-        });
-
-        // Increase speed by 10%
-        document.getElementById('speedUpButton').addEventListener('click', function() {
-            speedFactor = Math.min(10, speedFactor * 1.1);
-            updateSpeedDisplay();
-        });
-
-        // Decrease speed by 10%
-        document.getElementById('speedDownButton').addEventListener('click', function() {
-            speedFactor = Math.max(0.1, speedFactor / 1.1);
-            updateSpeedDisplay();
-        });
-
-        // Update the speed display
-        function updateSpeedDisplay() {
-            document.getElementById('speedDisplay').textContent = Math.round(speedFactor * 100) + '%';
-        }
-
-        // Initialize speed display
-        updateSpeedDisplay();
-    </script>
-</body>
-</html>
+                const utterance
