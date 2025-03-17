@@ -2,9 +2,16 @@
 let dictationData = null;
 let utterances = [];
 let currentIndex = 0;
-let speedFactor = 0.6; // Default starting speed set to 60%
+let speedFactor = 0.3; // Default starting speed set to 60%
 let isPaused = false;
-
+const themeSelector = document.getElementById('themeSelector');
+const savedTheme = localStorage.getItem('theme') || 'light';
+    document.body.className = savedTheme;
+    themeSelector.value = savedTheme;
+themeSelector.addEventListener('change', (e) => {
+        document.body.className = e.target.value;
+        localStorage.setItem('theme', e.target.value);
+    });
 // Load JSON data from dictation.json
 fetch('dictation.json')
     .then(response => {

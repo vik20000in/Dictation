@@ -1,0 +1,138 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+h1 {
+    text-align: center;
+    color: #333;
+}
+.controls {
+    margin-top: 10px;
+}
+select, button {
+    margin: 5px;
+    padding: 8px;
+    font-size: 14px;
+}
+button:disabled {
+    opacity: 0.5;
+}
+#speedDisplay {
+    margin-left: 10px;
+    font-weight: bold;
+}
+.instructions {
+    margin-top: 20px;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+}
+#textDisplay {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    min-height: 50px;
+    font-size: 18px;
+    white-space: pre-wrap; /* Preserves spaces and wraps text */
+}
+
+body {
+    font-family: Arial, sans-serif;
+    transition: all 0.3s ease;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    border-radius: 5px;
+    resize: vertical;
+}
+
+#themeSelector {
+    padding: 5px;
+    margin-bottom: 20px;
+}
+
+/* Light Theme (Default) */
+body.light {
+    background-color: #f0f0f0;
+    color: #333;
+}
+body.light button {
+    background-color: #4CAF50;
+    color: white;
+}
+body.light #transcript {
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
+
+/* Dark Theme */
+body.dark {
+    background-color: #333;
+    color: #fff;
+}
+body.dark button {
+    background-color: #2196F3;
+    color: white;
+}
+body.dark #transcript {
+    background-color: #444;
+    border: 1px solid #666;
+    color: #fff;
+}
+
+/* Fun Theme */
+body.fun {
+    background-color: #ffebee;
+    color: #d81b60;
+}
+body.fun button {
+    background-color: #ff5722;
+    color: white;
+}
+body.fun #transcript {
+    background-color: #fff3e0;
+    border: 1px solid #f4511e;
+}
+
+/* School Theme */
+body.school {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+body.school button {
+    background-color: #4caf50;
+    color: white;
+}
+body.school #transcript {
+    background-color: #fffde7;
+    border: 1px solid #2e7d32;
+}
