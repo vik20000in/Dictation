@@ -8,6 +8,9 @@ const themeSelector = document.getElementById('themeSelector');
 const savedTheme = localStorage.getItem('theme') || 'light';
     document.body.className = savedTheme;
     themeSelector.value = savedTheme;
+
+   
+
 themeSelector.addEventListener('change', (e) => {
         document.body.className = e.target.value;
         localStorage.setItem('theme', e.target.value);
@@ -85,15 +88,18 @@ document.getElementById('startButton').addEventListener('click', function() {
     phrases.forEach(phrase => {
         for (let i = 0; i < 3; i++) {
             const utterance = new SpeechSynthesisUtterance(phrase);
+           
             utterance.words = phrase.split(' '); // Split phrase into words
             utterance.onstart = function() {
                 this.currentWordIndex = 0;
-                document.getElementById('textDisplay').innerHTML = ''; // Clear display
+             //   document.getElementById('textDisplay').innerHTML = ''; // Clear display
             };
             utterance.onboundary = function(event) {
                 if (event.name === 'word' && this.currentWordIndex < this.words.length) {
                     const word = this.words[this.currentWordIndex];
+                    if(i==0){
                     document.getElementById('textDisplay').innerHTML += word + ' '; // Append word
+                    }
                     this.currentWordIndex++;
                 }
             };
@@ -104,7 +110,7 @@ document.getElementById('startButton').addEventListener('click', function() {
     // Reset state
     currentIndex = 0;
     isPaused = false;
-    document.getElementById('playPauseButton').textContent = 'Pause';
+    document.getElementById('playPauseButton').textContent = '|| Pause';
     document.getElementById('playPauseButton').disabled = false;
     document.getElementById('stopButton').disabled = false;
 
@@ -131,10 +137,10 @@ function speakNext() {
 document.getElementById('playPauseButton').addEventListener('click', function() {
     if (isPaused) {
         speechSynthesis.resume();
-        this.textContent = 'Pause';
+        this.textContent = '|| Pause';
     } else {
         speechSynthesis.pause();
-        this.textContent = 'Play';
+        this.textContent = '▶ Play';
     }
     isPaused = !isPaused;
 });

@@ -9,6 +9,7 @@ h1 {
     text-align: center;
     color: #333;
 }
+h1, label { font-family: 'Indie Flower', 'Cursive', sans-serif; }
 .controls {
     margin-top: 10px;
 }
@@ -109,18 +110,22 @@ body.dark #transcript {
     color: #fff;
 }
 
-/* Fun Theme */
-body.fun {
-    background-color: #ffebee;
-    color: #d81b60;
+/* Fun Theme */dy.fun {
+    background-color: #faffbd;
+    color: #ff6f00;
 }
+
+body.fun select,
 body.fun button {
-    background-color: #ff5722;
+    background-color: #ff006e;
     color: white;
 }
+
+body.fun #textDisplay,
 body.fun #transcript {
-    background-color: #fff3e0;
-    border: 1px solid #f4511e;
+    background-color: #ffffff;
+    border: 1px solid #ff6f00;
+    color: black;
 }
 
 /* School Theme */
