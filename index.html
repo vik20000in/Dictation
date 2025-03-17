@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dictation App for Class 6 ICSE</title>
+    <title>Dictation App</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -19,7 +19,7 @@
         .controls {
             margin-top: 10px;
         }
-        select, button, input {
+        select, button {
             margin: 5px;
             padding: 8px;
             font-size: 14px;
@@ -42,7 +42,6 @@
 <body>
     <h1>Dictation App</h1>
     <div class="controls">
-        <input type="file" id="jsonFile" accept=".json">
         <select id="categorySelect" disabled>
             <option value="">Select Category</option>
         </select>
@@ -60,12 +59,11 @@
     <div class="instructions">
         <h2>Instructions</h2>
         <ol>
-            <li>Upload the dictation JSON file.</li>
-            <li>Select a category and subcategory.</li>
-            <li>Click "Start Dictation" to begin.</li>
-            <li>Use "Pause/Play" to control the dictation.</li>
-            <li>Adjust speed with "Speed Up" and "Speed Down" buttons.</li>
-            <li>Click "Stop" to cancel the dictation.</li>
+            <li>Select a category and subcategory from the dropdowns.</li>
+            <li>Click "Start Dictation" to begin listening.</li>
+            <li>Use "Pause" or "Play" to pause or resume the dictation.</li>
+            <li>Adjust the speed using "Speed Up" and "Speed Down" buttons.</li>
+            <li>Click "Stop" to end the dictation and reset.</li>
         </ol>
     </div>
 
@@ -77,24 +75,19 @@
         let speedFactor = 1;
         let isPaused = false;
 
-        // Handle JSON file upload
-        document.getElementById('jsonFile').addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    try {
-                        dictationData = JSON.parse(e.target.result);
-                        populateCategories();
-                    } catch (error) {
-                        alert('Invalid JSON file. Please check the format.');
-                    }
-                };
-                reader.readAsText(file);
-            }
-        });
+        // Load JSON data automatically from dictation.json
+        fetch('dictation.json')
+            .then(response => response.json())
+            .then(data => {
+                dictationData = data;
+                populateCategories();
+            })
+            .catch(error => {
+                console.error('Error loading JSON:', error);
+                alert('Failed to load dictation data. Please try again later.');
+            });
 
-        // Populate category dropdown
+        // Populate the category dropdown
         function populateCategories() {
             const categorySelect = document.getElementById('categorySelect');
             categorySelect.innerHTML = '<option value="">Select Category</option>';
@@ -107,7 +100,7 @@
             categorySelect.disabled = false;
         }
 
-        // Populate subcategory dropdown based on category selection
+        // Populate subcategory dropdown when a category is selected
         document.getElementById('categorySelect').addEventListener('change', function() {
             const selectedCategory = this.value;
             const subcategorySelect = document.getElementById('subcategorySelect');
@@ -127,12 +120,12 @@
             document.getElementById('startButton').disabled = true;
         });
 
-        // Enable start button when subcategory is selected
+        // Enable the Start button when a subcategory is selected
         document.getElementById('subcategorySelect').addEventListener('change', function() {
             document.getElementById('startButton').disabled = this.value === '';
         });
 
-        // Start the dictation
+        // Start the dictation process
         document.getElementById('startButton').addEventListener('click', function() {
             const subcategorySelect = document.getElementById('subcategorySelect');
             const selectedSubcategory = subcategorySelect.value;
@@ -142,10 +135,10 @@
             const subcategory = category.subcategories.find(sub => sub.name === selectedSubcategory);
             const phrases = subcategory.phrases;
 
-            // Cancel any ongoing speech
+            // Clear any ongoing speech
             speechSynthesis.cancel();
 
-            // Create utterances (each phrase repeated 3 times)
+            // Prepare utterances (each phrase repeated 3 times)
             utterances = [];
             phrases.forEach(phrase => {
                 for (let i = 0; i < 3; i++) {
@@ -161,18 +154,18 @@
             document.getElementById('playPauseButton').disabled = false;
             document.getElementById('stopButton').disabled = false;
 
-            // Begin speaking
+            // Start speaking
             speakNext();
         });
 
-        // Speak the next utterance in the queue
+        // Speak the next phrase in the queue
         function speakNext() {
             if (currentIndex < utterances.length) {
                 const utterance = utterances[currentIndex];
                 utterance.rate = speedFactor; // Apply current speed
                 speechSynthesis.speak(utterance);
                 currentIndex++;
-                utterance.onend = speakNext; // Chain to next utterance
+                utterance.onend = speakNext; // Move to the next phrase when this one ends
             } else {
                 alert('Dictation completed!');
                 document.getElementById('playPauseButton').disabled = true;
@@ -180,7 +173,7 @@
             }
         }
 
-        // Toggle play/pause
+        // Toggle between pause and play
         document.getElementById('playPauseButton').addEventListener('click', function() {
             if (isPaused) {
                 speechSynthesis.resume();
@@ -192,7 +185,7 @@
             isPaused = !isPaused;
         });
 
-        // Stop the dictation
+        // Stop the dictation and reset
         document.getElementById('stopButton').addEventListener('click', function() {
             speechSynthesis.cancel();
             currentIndex = 0;
@@ -214,7 +207,7 @@
             updateSpeedDisplay();
         });
 
-        // Update speed display
+        // Update the speed display
         function updateSpeedDisplay() {
             document.getElementById('speedDisplay').textContent = Math.round(speedFactor * 100) + '%';
         }
