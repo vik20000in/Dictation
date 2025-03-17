@@ -1,0 +1,17 @@
+{
+  "categories": [
+    {
+      "name": "English",
+      "subcategories": [
+        {
+          "name": "Lesson 1",
+          "phrases": [
+            "The quick brown fox",
+            "jumps over the lazy",
+            "dog in the field"
+          ]
+        }
+      ]
+    }
+  ]
+}
