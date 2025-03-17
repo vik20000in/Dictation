@@ -1,34 +1,14 @@
 {
   "categories": [
     {
-      "name": "Essay",
+      "name": "English",
       "subcategories": [
         {
-          "name": "Biography of a Mountain",
+          "name": "Lesson 1",
           "phrases": [
-            "Once upon a time,",
-            "in a vast land,",
-            "stood a grand mountain.",
-            "Majestic and ancient it was,",
-            "its peak touched the sky.",
-            "Rugged cliffs bore its face,",
-            "carved slowly by time.",
-            "Snow crowned its lofty top,",
-            "while green forests spread below.",
-            "Gentle streams wound nearby,",
-            "nourishing the fertile valley.",
-            "Birds soared around its heights,",
-            "singing songs in clear air.",
-            "Legends grew along its slopes,",
-            "and adventurers climbed its trails.",
-            "Nature whispered in its silence,",
-            "as seasons danced around it.",
-            "Spring flowers bloomed on rocks,",
-            "autumn leaves painted its slopes,",
-            "winter winds tested its strength,",
-            "and summer sun warmed its face.",
-            "This mountain taught resilience,",
-            "in every stone, history lives."
+            "The quick brown fox",
+            "jumps over the lazy",
+            "dog in the field"
           ]
         }
       ]
