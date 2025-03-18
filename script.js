@@ -133,7 +133,7 @@ document.getElementById('startButton').addEventListener('click', function() {
                    if (event.name === 'word' && this.currentWordIndex < this.words.length) {
                        const word = this.words[this.currentWordIndex];
                        if (i === 0) {
-                           document.getElementById('textDisplay').textContent += word + ' '; // Append word
+                           document.getElementById('textDisplay').innerHTML += word + ' '; // Append word
                        }
                        this.currentWordIndex++;
                    }
