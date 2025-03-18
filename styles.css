@@ -37,7 +37,9 @@ button:disabled {
     padding: 10px;
     border-radius: 5px;
 }
-
+body.light #repeatButton { /* New styling */
+    background-color: #2196F3;
+}
 body {
     font-family: Arial, sans-serif;
     transition: all 0.3s ease;
@@ -107,7 +109,9 @@ body.dark #transcript {
     border: 1px solid #666;
     color: #fff;
 }
-
+body.dark #repeatButton { /* New styling */
+    background-color: #4CAF50;
+}
 /* Fun Theme */dy.fun {
     background-color: #faffbd;
     color: #ff6f00;
@@ -125,7 +129,9 @@ body.fun #transcript {
     border: 1px solid #ff6f00;
     color: black;
 }
-
+body.fun #repeatButton { /* New styling */
+    background-color: #2196F3;
+}
 /* School Theme */
 body.school {
     background-color: #e8f5e9;
@@ -138,4 +144,7 @@ body.school button {
 body.school #transcript {
     background-color: #fffde7;
     border: 1px solid #2e7d32;
+}
+body.school #repeatButton { /* New styling */
+    background-color: #2196F3;
 }
