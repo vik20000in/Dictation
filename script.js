@@ -80,7 +80,7 @@ function populateVoices() {
     const voices = speechSynthesis.getVoices();
     voiceSelect.innerHTML = '<option value="">Default Voice</option>';
     voices.forEach(voice => {
-        if(voice.name.toLowerCase().includes('india')) {
+        if(voice.name.('Microsoft')) {
         const option = document.createElement('option');
         option.value = voice.name;
         option.textContent = `${voice.name} (${voice.lang})`;
