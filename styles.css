@@ -33,11 +33,9 @@ button:disabled {
 }
 #textDisplay {
     margin-top: 20px;
+    background-color: #f9f9f9;
     padding: 10px;
-    border: 1px solid #ccc;
-    min-height: 50px;
-    font-size: 18px;
-    white-space: pre-wrap; /* Preserves spaces and wraps text */
+    border-radius: 5px;
 }
 
 body {
