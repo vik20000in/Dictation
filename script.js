@@ -70,6 +70,27 @@ document.getElementById('subcategorySelect').addEventListener('change', function
     document.getElementById('startButton').disabled = this.value === '';
 });
 
+// Add voice selector
+const voiceSelect = document.createElement('select');
+voiceSelect.id = 'voiceSelect';
+document.querySelector('.controls').appendChild(voiceSelect);
+
+// Populate voices
+function populateVoices() {
+    const voices = speechSynthesis.getVoices();
+    voiceSelect.innerHTML = '<option value="">Default Voice</option>';
+    voices.forEach(voice => {
+        if(voice.name.startsWith('Microsoft')) {
+        const option = document.createElement('option');
+        option.value = voice.name;
+        option.textContent = `${voice.name} (${voice.lang})`;
+        voiceSelect.appendChild(option);
+    }
+    });
+}
+speechSynthesis.onvoiceschanged = populateVoices;
+populateVoices(); // Initial call
+
 // Start the dictation process
 document.getElementById('startButton').addEventListener('click', function() {
     const subcategorySelect = document.getElementById('subcategorySelect');
@@ -95,9 +116,14 @@ document.getElementById('startButton').addEventListener('click', function() {
 
        // Prepare utterances (each phrase repeated 3 times)
        utterances = [];
+       const selectedVoice = voiceSelect.value;
+       const voices = speechSynthesis.getVoices();
        phrases.forEach(phrase => {
            for (let i = 0; i < 3; i++) {
                const utterance = new SpeechSynthesisUtterance(phrase);
+               if (selectedVoice) {
+                utterance.voice = voices.find(v => v.name === selectedVoice);
+            }
                utterance.words = phrase.split(' '); // Split phrase into words
                utterance.onstart = function() {
                    this.currentWordIndex = 0;
