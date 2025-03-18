@@ -80,12 +80,12 @@ function populateVoices() {
     const voices = speechSynthesis.getVoices();
     voiceSelect.innerHTML = '<option value="">Default Voice</option>';
     voices.forEach(voice => {
-      //  if(voice.name.startsWith('Microsoft')) {
+        if(voice.name.toLowerCase().includes('india')) {
         const option = document.createElement('option');
         option.value = voice.name;
         option.textContent = `${voice.name} (${voice.lang})`;
         voiceSelect.appendChild(option);
-   // }
+    }
     });
 }
 speechSynthesis.onvoiceschanged = populateVoices;
@@ -148,7 +148,7 @@ document.getElementById('startButton').addEventListener('click', function() {
        document.getElementById('playPauseButton').textContent = '|| Pause';
        document.getElementById('playPauseButton').disabled = false;
        document.getElementById('stopButton').disabled = false;
-       document.getElementById('repeatButton').disabled = false;
+     
        // Start speaking
        speakNext();
    })
@@ -169,7 +169,7 @@ function speakNext() {
         alert('Dictation completed!');
         document.getElementById('playPauseButton').disabled = true;
         document.getElementById('stopButton').disabled = true;
-        document.getElementById('repeatButton').disabled = false;
+     
     }
 }
 
@@ -193,7 +193,7 @@ document.getElementById('stopButton').addEventListener('click', function() {
     document.getElementById('playPauseButton').textContent = 'Pause';
     document.getElementById('playPauseButton').disabled = true;
     document.getElementById('stopButton').disabled = true;
-    document.getElementById('repeatButton').disabled = true;
+    
     document.getElementById('textDisplay').innerHTML = ''; // Clear text display
 });
 
