@@ -12,6 +12,35 @@
             "phraseFile": "data/english_forest_phrases.json"
           }
         ]
+      },
+      {
+        "name": "Essays for Class 6 ICSE",
+        "subcategories": [
+          {
+            "name": "Importance of Reading",
+            "phraseFile": "data/essay_importance_of_reading.json"
+          },
+          {
+            "name": "My Best Friend",
+            "phraseFile": "data/essay_my_best_friend.json"
+          },
+          {
+            "name": "A Rainy Day",
+            "phraseFile": "data/essay_a_rainy_day.json"
+          },
+          {
+            "name": "My Favorite Festival",
+            "phraseFile": "data/essay_diwali_short.json"
+          },
+          {
+            "name": "Trees - Nature’s Gift",
+            "phraseFile": "data/essay_trees_short.json"
+          },
+          {
+            "name": "A Rainy Day",
+            "phraseFile": "data/essay_rainy_day_short.json"
+          }
+        ]
       }
     ]
   }
