@@ -16,7 +16,7 @@ themeSelector.addEventListener('change', (e) => {
         localStorage.setItem('theme', e.target.value);
     });
 // Load JSON data from dictation.json
-fetch('dictation.json')
+fetch('data/categories.json')
     .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -78,46 +78,59 @@ document.getElementById('startButton').addEventListener('click', function() {
     const selectedCategory = categorySelect.value;
     const category = dictationData.categories.find(cat => cat.name === selectedCategory);
     const subcategory = category.subcategories.find(sub => sub.name === selectedSubcategory);
-    const phrases = subcategory.phrases;
+    const phraseFile = subcategory.phraseFile;
+   // Fetch the phrases
+   fetch(phraseFile)
+   .then(response => {
+       if (!response.ok) {
+           throw new Error(`Failed to load ${phraseFile}`);
+       }
+       return response.json();
+   })
+   .then(data => {
+       const phrases = data.phrases;
 
-    // Clear any ongoing speech
-    speechSynthesis.cancel();
+       // Clear any ongoing speech
+       speechSynthesis.cancel();
 
-    // Prepare utterances (each phrase repeated 3 times)
-    utterances = [];
-    phrases.forEach(phrase => {
-        for (let i = 0; i < 3; i++) {
-            const utterance = new SpeechSynthesisUtterance(phrase);
-           
-            utterance.words = phrase.split(' '); // Split phrase into words
-            utterance.onstart = function() {
-                this.currentWordIndex = 0;
-             //   document.getElementById('textDisplay').innerHTML = ''; // Clear display
-            };
-            utterance.onboundary = function(event) {
-                if (event.name === 'word' && this.currentWordIndex < this.words.length) {
-                    const word = this.words[this.currentWordIndex];
-                    if(i==0){
-                    document.getElementById('textDisplay').innerHTML += word + ' '; // Append word
-                    }
-                    this.currentWordIndex++;
-                }
-            };
-            utterances.push(utterance);
-        }
-    });
+       // Prepare utterances (each phrase repeated 3 times)
+       utterances = [];
+       phrases.forEach(phrase => {
+           for (let i = 0; i < 3; i++) {
+               const utterance = new SpeechSynthesisUtterance(phrase);
+               utterance.words = phrase.split(' '); // Split phrase into words
+               utterance.onstart = function() {
+                   this.currentWordIndex = 0;
+                //   document.getElementById('textDisplay').innerHTML = ''; // Clear display
+               };
+               utterance.onboundary = function(event) {
+                   if (event.name === 'word' && this.currentWordIndex < this.words.length) {
+                       const word = this.words[this.currentWordIndex];
+                       if (i === 0) {
+                           document.getElementById('textDisplay').innerHTML += word + ' '; // Append word
+                       }
+                       this.currentWordIndex++;
+                   }
+               };
+               utterances.push(utterance);
+           }
+       });
 
-    // Reset state
-    currentIndex = 0;
-    isPaused = false;
-    document.getElementById('playPauseButton').textContent = '|| Pause';
-    document.getElementById('playPauseButton').disabled = false;
-    document.getElementById('stopButton').disabled = false;
+       // Reset state
+       currentIndex = 0;
+       isPaused = false;
+       document.getElementById('playPauseButton').textContent = '|| Pause';
+       document.getElementById('playPauseButton').disabled = false;
+       document.getElementById('stopButton').disabled = false;
 
-    // Start speaking
-    speakNext();
+       // Start speaking
+       speakNext();
+   })
+   .catch(error => {
+       console.error('Error loading phrases:', error);
+       alert(`Failed to load phrases for ${selectedSubcategory}. Please check the phrase file.`);
+   });
 });
-
 // Speak the next phrase in the queue
 function speakNext() {
     if (currentIndex < utterances.length) {

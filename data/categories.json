@@ -1,0 +1,17 @@
+{
+    "categories": [
+      {
+        "name": "English",
+        "subcategories": [
+          {
+            "name": "Biography of a Mountain",
+            "phraseFile": "data/english_mountain_phrases.json"
+          },
+          {
+            "name": "The Enchanted Forest",
+            "phraseFile": "data/english_forest_phrases.json"
+          }
+        ]
+      }
+    ]
+  }
